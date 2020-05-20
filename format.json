@@ -1,0 +1,168 @@
+[
+  {
+    "mainMenu": "User",
+    "subMenu": [
+      {
+        "subMenuName": "Data User",
+        "type": "datatable, table, card2, card4, list-detail1(gak request), list-detail2(gak request), chat, dashboard, profile",
+        "summaryShow": {
+          "url": "pakai get aja",
+          "jumlah": "2",
+          "box": [
+            {
+              "varServer": "totalUser",
+              "title": "Total User",
+              "color": "bebas",
+              "isFilterAction": false
+            },
+            {
+              "varServer": "userAktif",
+              "title": "User Aktif",
+              "color": "bebas",
+              "isFilterAction": false
+            }
+          ]
+        },
+        "graphShow": [
+          {
+            "name": "pie chart jenis kelamin",
+            "tipe": "pie",
+            "url": ""
+          },
+          {
+            "name": "line pendaftar 7 hari terakhir",
+            "tipe": "line",
+            "url": ""
+          }
+        ],
+        "buttonAction": [
+          {
+            "name": "Excel",
+            "url": "http",
+            "method": "PUT",
+            "type": "entity atau download",
+            "entity": [
+              {
+                "name": "id_",
+                "varServer": "id_",
+                "isShow": false,
+                "isDisable": false,
+                "isValidate": false,
+                "isImage": false,
+                "placeHolder": "",
+                "type": "text,select,tag, tags, radiobutton,date,number,email,file, datetime, table, list-edit (contoh utk alamat, todo)",
+                "option": [
+                  ""
+                ],
+                "default": "",
+                "isAutoComplete": false,
+                "autoUrl": ""
+              }
+            ]
+          }
+        ],
+        "tableFilter": [
+          {
+            "name": "id_",
+            "placeHolder": "0",
+            "type": "autoComplete, tag, tags, date, rangeDate",
+            "defaultValues": [],
+            "url": "http get"
+          }
+        ],
+        "tableEntity": [
+          {
+            "name": "id_",
+            "varServer": "id_",
+            "isShow": false,
+            "isSearch": false,
+            "align": "",
+            "isBold": false,
+            "isImage": false,
+            "isCurrency": false
+          },
+          {
+            "name": "Nama User",
+            "varServer": "nama",
+            "isShow": true,
+            "isSearch": false,
+            "align": "",
+            "isBold": false,
+            "isImage": false,
+            "isCurrency": false
+          },
+          {
+            "name": "Tanggal Lahir",
+            "varServer": "tglLahir",
+            "isShow": true,
+            "isSearch": false,
+            "align": "",
+            "isBold": false,
+            "isImage": false,
+            "isCurrency": false
+          }
+        ],
+        "tableAction": [
+          {
+            "name": "keterangan muncul",
+            "url": "http://apa.com/reset_password/{id} , selalu pakai id di url nya",
+            "method": "POST/PUT",
+            "ico": "",
+            "confirmation": "pertanyaan sebelum ok dikirim"
+          }
+        ],
+        "detailType": "modal,page,list (hanya list-detail)",
+        "isWizard": false,
+        "detailEntity": [
+          {
+            "name": "id_",
+            "varServer": "id_",
+            "isShow": false,
+            "isDisable": false,
+            "isValidate": false,
+            "isImage": false,
+            "placeHolder": "",
+            "type": "text,select,tag, tags, radiobutton,date,number,email,file, datetime, table, list-edit (contoh utk alamat, todo)",
+            "option": [
+              ""
+            ],
+            "default": "",
+            "isAutoComplete": false,
+            "autoUrl": ""
+          }
+        ],
+        "wizardType": "server/local",
+        "wizardDetailEntity": [
+          {
+            "stepName": "",
+            "getUrl":"",
+            "postUrl": "",
+            "entities": [
+              {
+                "name": "id_",
+                "varServer": "id_",
+                "isShow": false,
+                "isDisable": false,
+                "isValidate": false,
+                "isImage": false,
+                "placeHolder": "",
+                "type": "text,select,tag, tags, radiobutton,date,number,email,file, datetime, table, list-edit (contoh utk alamat, todo)",
+                "option": [
+                  ""
+                ],
+                "default": "",
+                "isAutoComplete": false,
+                "autoUrl": ""
+              }
+            ]
+          }
+        ],
+        "urlGetList": "/user/user",
+        "urlDelete": "/user/user",
+        "urlGet": "/user/user",
+        "urlPost": "/user/user",
+        "urlPut": "/user/user"
+      }
+    ]
+  }
+]
