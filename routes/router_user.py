@@ -43,16 +43,25 @@ async def add_user(user: UserBase):
     user.createTime = datetime.utcnow()
     user.updateTime = datetime.utcnow()
     user.nama = user.nama.upper()
+    user.hobi = user.hobi.upper()
     user_op = await DB.tbl_user.insert_one(user.dict())
     if user_op.inserted_id:
         user = await _get_user_or_404(user_op.inserted_id)
         return user
 
 
-@router_user.get("/user", response_model=List[UserOnDb]) #TODO terapkan filtering
-async def get_all_users(size: int = 10, page: int = 0):
+@router_user.get("/user", response_model=List[UserOnDb])
+async def get_all_users(nama: str = '', hobi: str = '', size: int = 10, page: int = 0):
     skip = page * size
-    users_cursor = DB.tbl_user.find().skip(skip).limit(size)
+    criteria = []
+    if len(nama) > 2:
+        criteria.append({"nama": {'$regex': nama.upper()}})
+    if len(hobi) > 2:
+        criteria.append({"hobi" : {'$regex': hobi.upper(),"$options": "i"}})
+    
+    criteria = { "$and" : criteria } if len(criteria) > 0 else {}
+    print(criteria)
+    users_cursor = DB.tbl_user.find(criteria).skip(skip).limit(size)
     users = await users_cursor.to_list(length=size)
     return list(map(fix_id, users))
 

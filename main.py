@@ -3,8 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from config import config
 from routes.router_user import router_user
 from routes.router_hobi import router_hobi
+from routes.router_wizard import router_wizard
 from routes.router_filter import router_filter
 from routes.router_summary import router_summary
+from routes.router_graph import router_graph
 from routes.router_action import router_action
 from routes.router_image import router_image
 
@@ -20,8 +22,10 @@ app.add_middleware(
 
 app.include_router(router_user,prefix="/generatorpy/user",tags=["user"],responses={404: {"description": "Not found"}})
 app.include_router(router_hobi,prefix="/generatorpy/hobi",tags=["hobi"],responses={404: {"description": "Not found"}})
+app.include_router(router_wizard,prefix="/generatorpy/wizard",tags=["wizard"],responses={404: {"description": "Not found"}})
 app.include_router(router_filter,prefix="/generatorpy/filter",tags=["filter"],responses={404: {"description": "Not found"}})
 app.include_router(router_summary,prefix="/generatorpy/summary",tags=["summary"],responses={404: {"description": "Not found"}})
+app.include_router(router_graph,prefix="/generatorpy/graph",tags=["graph"],responses={404: {"description": "Not found"}})
 app.include_router(router_action,prefix="/generatorpy/action",tags=["action"],responses={404: {"description": "Not found"}})
 app.include_router(router_image,prefix="/generatorpy/image",tags=["image"],responses={404: {"description": "Not found"}})
 

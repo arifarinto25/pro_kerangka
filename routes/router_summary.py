@@ -8,6 +8,7 @@ import random
 import string
 
 from .model_user import UserBase, UserOnDb, Gender, Hobby
+from .router_graph import get_user_pie_chart_jenis_kelamin, get_user_garis_chart_new_user_15_hari
 
 router_summary = APIRouter()
 
@@ -43,7 +44,7 @@ async def get_summary():
     total = await DB.tbl_user.count_documents({})
     laki = await DB.tbl_user.count_documents({"jenisKelamin":"laki-laki"})
     perempuan = await DB.tbl_user.count_documents({"jenisKelamin":"perempuan"})
-    start_date = datetime.utcnow() - timedelta(5)
+    start_date = datetime.utcnow() - timedelta(14)
     print(start_date)
     newUser = await DB.tbl_user.count_documents({
         "createTime": {"$gte": start_date}
@@ -55,4 +56,9 @@ async def get_summary():
         "newUser":newUser
     }
 
-#TODO bikin reply dashboard
+@router_summary.get("/dashboard", response_model=dict)
+async def get_dashboard():
+    data = await get_summary()
+    graph1 = await get_user_pie_chart_jenis_kelamin()
+    graph2 = await get_user_garis_chart_new_user_15_hari()
+    return {"summary":data,"graph1":graph1,"graph2":graph2}

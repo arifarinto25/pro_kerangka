@@ -9,17 +9,35 @@ class WizardEntity(BaseModel):
 
 class WizardStep(BaseModel):
     id_: str = None
-    number: int = 0
+    stepNumber: int = 0
     createTime: datetime = None
     updateTime: datetime = None
-    name: str = None
+    stepName: str = None
     entity: List[WizardEntity] = []
 
+class TipeId(str,Enum):
+    uid = "uid"
+    email = "email"
+    phone = "phone"
+    hardware = "hardware"
+
 class WizardBase(BaseModel):
+    createTime: datetime = None
+    updateTime: datetime = None
+    idCreatorTipe : TipeId = None
     idCreator: str = None
-    idCustomer: str = None #email, idAccount, idCustomer, idUser
+    idCustomerTipe: TipeId
+    idCustomer: str
+    nameCustomer: str = None
+    wizName: str = None
     wizard: List[WizardStep] = []
+    status: bool = False
 
 class WizardOnDb(WizardBase):
     id_: str 
 
+class WizardStep1(WizardBase):
+    pass
+
+class WizardStep2(WizardStep):
+    pass
