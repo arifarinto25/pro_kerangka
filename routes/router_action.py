@@ -74,5 +74,5 @@ async def upload_user(file: UploadFile = File(...)):
         user.hobi = row['hobi']
         user.image = row['image']
         result.append(user.dict())
-    insert = await DB.tbl_user.insert_many(result)
+    DB.tbl_user.insert_many(result)
     return {"ok"}
