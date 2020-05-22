@@ -134,11 +134,11 @@ async def delete_wizard(id_: ObjectId = Depends(validate_object_id)):
 
 
 @router_wizard.put("/wizard/{id_}", response_model=WizardOnDb)
-async def update_wizard(wizard_data: WizardBase, id_: ObjectId = Depends(validate_object_id)):
+async def update_wizard(wizard_data: dict, id_: ObjectId = Depends(validate_object_id)):
     wizard = await DB.tbl_wizard.find_one({"_id": id_})
     if wizard:
         wizard_op = await DB.tbl_wizard.update_one(
-            {"_id": id_}, {"$set": wizard_data.dict()}
+            {"_id": id_}, {"$set": wizard_data}
         )
         if wizard_op.modified_count:
             return await _get_wizard_or_404(id_)

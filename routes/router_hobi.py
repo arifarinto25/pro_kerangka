@@ -73,11 +73,11 @@ async def delete_hobi(id_: ObjectId = Depends(validate_object_id)):
 
 
 @router_hobi.put("/hobi/{id_}", response_model=HobbyOnDb)
-async def update_hobi(hobi_data: Hobby, id_: ObjectId = Depends(validate_object_id)):
+async def update_hobi(hobi_data:dict, id_: ObjectId = Depends(validate_object_id)):
     hobi = await DB.tbl_hobi.find_one({"_id": id_})
     if hobi:
         hobi_op = await DB.tbl_hobi.update_one(
-            {"_id": id_}, {"$set": hobi_data.dict()}
+            {"_id": id_}, {"$set": hobi_data}
         )
         if hobi_op.modified_count:
             return await _get_hobi_or_404(id_)

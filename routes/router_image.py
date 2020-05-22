@@ -116,7 +116,7 @@ async def get_image(file_name: str, jenis: str):
         raise HTTPException(status_code=404, detail="Image not found")
 
 @router_image.get("/image", response_model=List[MediaBaseOnDb])
-async def get_all_users(size: int = 10, page: int = 0):
+async def get_all_images(size: int = 10, page: int = 0):
     skip = page * size
     images_cursor = DB.tbl_image.find().skip(skip).limit(size)
     images = await images_cursor.to_list(length=size)

@@ -26,8 +26,8 @@ class WizardBase(BaseModel):
     updateTime: datetime = None
     idCreatorTipe : TipeId = None
     idCreator: str = None
-    idCustomerTipe: TipeId
-    idCustomer: str
+    idCustomerTipe: TipeId = None
+    idCustomer: str = None
     nameCustomer: str = None
     wizName: str = None
     wizard: List[WizardStep] = []

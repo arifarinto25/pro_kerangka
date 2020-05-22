@@ -85,13 +85,12 @@ async def delete_user(id_: ObjectId = Depends(validate_object_id)):
 
 
 @router_user.put("/user/{id_}", response_model=UserOnDb)
-async def update_user(user_data: UserBase, id_: ObjectId = Depends(validate_object_id)):
+async def update_user(user_data:dict , id_: ObjectId = Depends(validate_object_id)):
     user = await DB.tbl_user.find_one({"_id": id_})
     if user:
-        user_data.updateTime = datetime.utcnow()
-        user_data.createTime = user["createTime"]
+        user_data["updateTime"] = datetime.utcnow()
         user_op = await DB.tbl_user.update_one(
-            {"_id": id_}, {"$set": user_data.dict()}
+            {"_id": id_}, {"$set": user_data}
         )
         if user_op.modified_count:
             return await _get_user_or_404(id_)

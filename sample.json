@@ -1,0 +1,56 @@
+{
+    "createTime": "2020-05-21T01:05:05.854000",
+    "updateTime": "2020-05-21T01:31:42.024000",
+    "idCreatorTipe": null,
+    "idCreator": null,
+    "idCustomerTipe": "email",
+    "idCustomer": "arif@demo.com",
+    "nameCustomer": null,
+    "wizName": "STEP 1",
+    "wizard": [
+      {
+        "id_": "cboumq",
+        "stepNumber": 1,
+        "createTime": "2020-05-21T01:05:05.854000",
+        "updateTime": "2020-05-21T01:05:05.854000",
+        "stepName": "Isi Nama",
+        "entity": [
+          {
+            "var": "nama",
+            "value": "arif"
+          },
+          {
+            "var": "nohp",
+            "value": "081233213213"
+          },
+          {
+            "var": "email",
+            "value": "arif@demo.com"
+          }
+        ]
+      },
+      {
+        "id_": "qlrkba",
+        "stepNumber": 2,
+        "createTime": "2020-05-21T01:31:42.024000",
+        "updateTime": "2020-05-21T01:31:42.024000",
+        "stepName": "Isi Keterangan",
+        "entity": [
+          {
+            "var": "tempatLahir",
+            "value": "salatiga"
+          },
+          {
+            "var": "tanggalLahir",
+            "value": "2020-01-01"
+          },
+          {
+            "var": "jenisKelamin",
+            "value": "laki-laki"
+          }
+        ]
+      }
+    ],
+    "status": false,
+    "id_": "5ec5d3c17c8ce6a52aaad8a8"
+  }
