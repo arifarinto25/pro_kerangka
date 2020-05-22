@@ -8,6 +8,7 @@ import random
 import string
 
 from .model_user import UserBase, UserOnDb, TokenData
+from .token import get_current_user
 
 router_user = APIRouter()
 
