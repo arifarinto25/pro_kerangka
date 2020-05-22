@@ -63,9 +63,16 @@ async def upload_user(file: UploadFile = File(...)):
         user.createTime = datetime.utcnow()
         user.updateTime = datetime.utcnow()
         user.nama = row['nama'].upper()
-        # user.image = row['image']
-        user.jenisKelamin = row['jenisKelamin']
+        user.nohp = row['nohp']
+        user.username = row['username']
+        user.password = row['password']
+        user.role = row['role']
+        user.tempatLahir = row['tempatLahir']
         user.tglLahir = row['tglLahir']
+        user.jenisKelamin = row['jenisKelamin']
+        user.alamat = row['alamat']
+        user.hobi = row['hobi']
+        user.image = row['image']
         result.append(user.dict())
-    # DB.tbl_user.insert_many(result)
+    insert = await DB.tbl_user.insert_many(result)
     return {"ok"}
