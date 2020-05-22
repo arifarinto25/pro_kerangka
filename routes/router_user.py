@@ -7,7 +7,7 @@ import logging
 import random
 import string
 
-from .model_user import UserBase, UserOnDb
+from .model_user import UserBase, UserOnDb, TokenData
 
 router_user = APIRouter()
 
@@ -99,4 +99,11 @@ async def update_user(user_data: UserBase, id_: ObjectId = Depends(validate_obje
     else:
         raise HTTPException(status_code=404, detail="User not found")
 
-#TODO reply user profile
+@router_user.get("/user_my_profile", response_model=UserOnDb)
+async def get_user_my_profile(current_user: TokenData = Depends(get_current_user)):
+    user = await DB.tbl_user.find_one({"_id": current_user.account})
+    if user:
+        user = fix_id(user)
+        return user
+    else:
+        raise HTTPException(status_code=404, detail="User not found")

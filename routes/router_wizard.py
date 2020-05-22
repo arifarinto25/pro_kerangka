@@ -1,4 +1,3 @@
-#TODO input mode wizard
 from bson import ObjectId
 from config.config import DB, CONF
 from fastapi import APIRouter, Depends, HTTPException
@@ -8,7 +7,7 @@ import logging
 import random
 import string
 
-from .model_wizard import WizardBase, WizardOnDb, WizardStep, WizardStep1, WizardStep2
+from .model_wizard import WizardBase, WizardOnDb, WizardStep
 
 router_wizard = APIRouter()
 
@@ -40,11 +39,11 @@ def randomString(stringLength=6):
 # =================================================================================
 # step 1 : isi nama, nohp, email
 # step 2 : isi tempat lahir, tanggal lahir, jenis kelamin, hobi
-# step 3 : upload image
+# step 3 : upload image / update image
 # step 4 : username, password
 
-@router_wizard.post("/wizard_user_step1", response_model=WizardOnDb) #initiate wizard
-async def wizard_user_step1(wizard: WizardStep1):
+@router_wizard.post("/wizard_user_step_start", response_model=WizardOnDb) #initiate wizard
+async def wizard_user_step_start(wizard: WizardBase):
     sekarang = datetime.utcnow()
     wizard.createTime = sekarang
     wizard.updateTime = sekarang
@@ -58,17 +57,41 @@ async def wizard_user_step1(wizard: WizardStep1):
         wizard = await _get_wizard_or_404(wizard_op.inserted_id)
         return wizard
 
-@router_wizard.post("/wizard_user_step2/{id_}", response_model=WizardStep) #push wizard array
-async def wizard_user_step2(wizard: WizardStep2, id_: ObjectId = Depends(validate_object_id)):
+@router_wizard.post("/wizard_user_step_process/{id_}", response_model=WizardStep) #push wizard array
+async def wizard_user_step_process(wizard: WizardStep, id_: ObjectId = Depends(validate_object_id)):
     sekarang = datetime.utcnow()
     wizard_cek = await DB.tbl_wizard.find_one({"_id": id_})
     if wizard_cek:
         wizard.id_ = randomString(6)
-        wizard.stepNumber = 2
         wizard.createTime = sekarang
         wizard.updateTime = sekarang
         wizard_op = await DB.tbl_wizard.update_one(
-            {"_id":id_,"wizard.stepNumber":2},
+            {"_id":id_,"wizard.stepNumber":wizard.stepNumber},
+            {"$set": {"wizard.$": wizard.dict(),"updateTime": sekarang}}
+        )
+        if wizard_op.modified_count:
+            return wizard
+        else:
+            wizard_add = await DB.tbl_wizard.update_one(
+                {"_id":id_},
+                {"$addToSet": { "wizard": wizard.dict()},
+                 "$set": {"updateTime": sekarang}}
+            )
+            return wizard
+        #another action for stepNumber, for example : send email, make invoice. PAKAI SWITCH CASE
+    else:
+        raise HTTPException(status_code=404, detail="Wizard not found")
+
+@router_wizard.post("/wizard_user_step_finish/{id_}", response_model=WizardStep) #push wizard array
+async def wizard_user_step_finish(wizard: WizardStep, id_: ObjectId = Depends(validate_object_id)):
+    sekarang = datetime.utcnow()
+    wizard_cek = await DB.tbl_wizard.find_one({"_id": id_})
+    if wizard_cek:
+        wizard.id_ = randomString(6)
+        wizard.createTime = sekarang
+        wizard.updateTime = sekarang
+        wizard_op = await DB.tbl_wizard.update_one(
+            {"_id":id_,"wizard.stepNumber":wizard.stepNumber},
             {"$set": {"wizard.$": wizard.dict(),"updateTime": sekarang}}
         )
         if wizard_op.modified_count:
@@ -81,6 +104,7 @@ async def wizard_user_step2(wizard: WizardStep2, id_: ObjectId = Depends(validat
                  "$set": {"updateTime": sekarang}}
             )
             return wizard
+        #TODO action after finished the wizard
     else:
         raise HTTPException(status_code=404, detail="Wizard not found")
 

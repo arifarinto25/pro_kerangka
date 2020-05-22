@@ -9,7 +9,7 @@ class WizardEntity(BaseModel):
 
 class WizardStep(BaseModel):
     id_: str = None
-    stepNumber: int = 0
+    stepNumber: int
     createTime: datetime = None
     updateTime: datetime = None
     stepName: str = None
@@ -35,9 +35,3 @@ class WizardBase(BaseModel):
 
 class WizardOnDb(WizardBase):
     id_: str 
-
-class WizardStep1(WizardBase):
-    pass
-
-class WizardStep2(WizardStep):
-    pass

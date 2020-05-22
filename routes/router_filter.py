@@ -7,7 +7,7 @@ import logging
 import random
 import string
 
-from .model_user import UserBase, UserOnDb, Gender, Hobby
+from .model_user import UserBase, UserOnDb, Gender, Hobby, RoleType
 
 router_filter = APIRouter()
 
@@ -45,6 +45,10 @@ async def get_user_jenis_kelamin():
 @router_filter.get("/user_hobi", response_model=list)
 async def get_user_hobi():
     return list(Hobby)
+
+@router_filter.get("/user_role", response_model=list)
+async def get_user_role():
+    return list(RoleType)
 
 @router_filter.get("/auto_search_user/{key}", response_model=List[UserOnDb])
 async def auto_search_user(key: str, size: int = 10, page: int = 0):
