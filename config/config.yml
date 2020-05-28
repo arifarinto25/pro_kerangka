@@ -10,5 +10,5 @@ databases:
     NAME: 'db_kerangka'
     USER: ''
     PASSWORD: ''
-    HOST: 'localhost'
+    HOST: '192.168.10.102'
     PORT: 27017
