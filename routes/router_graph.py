@@ -86,18 +86,13 @@ async def get_user_garis_chart_new_user_15_hari():
     y = 0
     jumlah_data = len(favorit)
     for x in range(16):
-        print(x)
-        print(y)
-        print(favorit[y]["_id"])
         if favorit[y]["_id"] == start_date.strftime('%Y-%m-%d'):
-            print("ada")
             labels.append(favorit[y]["_id"])
             datas.append(favorit[y]["count"])
             jumlah_data -= 1
             if jumlah_data != 0:
                 y += 1
         else:
-            print("tidak ada")
             labels.append(start_date.strftime('%Y-%m-%d'))
             datas.append(0)
         start_date += timedelta(1)
