@@ -61,8 +61,7 @@ async def get_user_pie_chart_jenis_kelamin():
 @router_graph.get("/user_garis_chart_new_user_15_hari", response_model=dict)
 async def get_user_garis_chart_new_user_15_hari():
     total = await DB.tbl_user.count_documents({})
-    start_date = datetime.utcnow() - timedelta(14)
-    print(start_date)
+    start_date = datetime.utcnow() - timedelta(15)
     newUser = await DB.tbl_user.count_documents({
         "createTime": {"$gte": start_date}
     })
@@ -85,12 +84,20 @@ async def get_user_garis_chart_new_user_15_hari():
     labels = []
     datas = []
     y = 0
-    for x in range(15):
+    jumlah_data = len(favorit)
+    for x in range(16):
+        print(x)
+        print(y)
+        print(favorit[y]["_id"])
         if favorit[y]["_id"] == start_date.strftime('%Y-%m-%d'):
+            print("ada")
             labels.append(favorit[y]["_id"])
             datas.append(favorit[y]["count"])
-            y += 1
+            jumlah_data -= 1
+            if jumlah_data != 0:
+                y += 1
         else:
+            print("tidak ada")
             labels.append(start_date.strftime('%Y-%m-%d'))
             datas.append(0)
         start_date += timedelta(1)
