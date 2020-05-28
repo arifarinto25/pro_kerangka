@@ -22,7 +22,7 @@ class UserBase(BaseModel):
     createTime: datetime = None
     updateTime: datetime = None
     nama: str = None
-    nohp: Optional[str]
+    nohp: str = None
     email: str = None
     username: str = None
     password: str = None
