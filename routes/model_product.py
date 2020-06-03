@@ -20,7 +20,7 @@ class ProductBase(BaseModel):
     subTitle: str = None
     descText: str = None
     descList: List[str] = []
-    category: str = None
+    category: List[str] = [] #tags
     priceNormal: int = 0
     priceFinal: int = 0
     image: str = None
