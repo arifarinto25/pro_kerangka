@@ -3,6 +3,11 @@ from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
 
+class ImageType(str, Enum):
+    std = "std"
+    thumb = "thumb"
+    ico = "ico"
+
 class ImageBase(BaseModel):
     name: str = None
 

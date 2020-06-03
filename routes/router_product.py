@@ -43,7 +43,6 @@ async def add_product(product: ProductBase):
     product.createTime = datetime.utcnow()
     product.updateTime = datetime.utcnow()
     product.name = product.name.upper()
-    product.category = product.category.upper()
     product_op = await DB.tbl_product.insert_one(product.dict())
     if product_op.inserted_id:
         product = await _get_product_or_404(product_op.inserted_id)
