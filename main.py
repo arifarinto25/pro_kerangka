@@ -9,6 +9,8 @@ from routes.router_summary import router_summary
 from routes.router_graph import router_graph
 from routes.router_action import router_action
 from routes.router_image import router_image
+from routes.router_product import router_product
+from routes.router_category import router_category
 
 app = FastAPI()
 
@@ -28,6 +30,8 @@ app.include_router(router_summary,prefix="/generatorpy/summary",tags=["summary"]
 app.include_router(router_graph,prefix="/generatorpy/graph",tags=["graph"],responses={404: {"description": "Not found"}})
 app.include_router(router_action,prefix="/generatorpy/action",tags=["action"],responses={404: {"description": "Not found"}})
 app.include_router(router_image,prefix="/generatorpy/image",tags=["image"],responses={404: {"description": "Not found"}})
+app.include_router(router_product,prefix="/generatorpy/product",tags=["product"],responses={404: {"description": "Not found"}})
+app.include_router(router_category,prefix="/generatorpy/category",tags=["category"],responses={404: {"description": "Not found"}})
 
 @app.on_event("startup")
 async def app_startup():
