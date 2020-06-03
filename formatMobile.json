@@ -1,0 +1,12 @@
+[
+  {
+    "title": "Judul Aplikasi",
+    "type": "header",
+    "url": "",
+    "method": "GET",
+    "filter": {},
+    "entity": {"leftMenu":[],"title":"Judul Aplikasi","rightMenu":""},
+    "ico": "icon yang dipakai dari local asset",
+    "bgColor": ""
+  }
+]
