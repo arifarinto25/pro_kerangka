@@ -1,4 +1,3 @@
-import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from config import config
@@ -43,6 +42,3 @@ async def app_startup():
 async def app_shutdown():
     # This does finish the DB driver connection.
     config.close_db_client()
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8001, log_level="info", reload=True)
