@@ -121,3 +121,35 @@ async def get_all_images(size: int = 10, page: int = 0):
     images_cursor = DB.tbl_image.find().skip(skip).limit(size)
     images = await images_cursor.to_list(length=size)
     return list(map(fix_image_id, images))
+
+@router_image.post("/uploadfiles")
+async def upload_images(background_tasks: BackgroundTasks, files: List[UploadFile] = File(...)):
+
+    for gambar in files:
+        content_type = gambar.content_type
+        if content_type == "image/jpeg" or content_type == "image/svg" or content_type == "image/jpg" or content_type == "image/png" or content_type == "image/gif":
+            dm = MediaBase()
+            origin_name = randomString(6) + gambar.filename
+            folder = "/root/piton/pro_kerangka/images/"
+            file_location = folder + origin_name
+            file_object = gambar.file
+            upload = open(os.path.join(folder, origin_name), 'wb+')
+            shutil.copyfileobj(file_object, upload)
+            upload.close()
+            #proses image di back ground
+            extention = content_type.replace('image/','')
+            random = randomString(8)
+            dm.name = str(date.today()) + '_' + random + '_'
+            new_file_name = folder + dm.name
+            dm.createTime = datetime.utcnow()
+            dm.updateTime = datetime.utcnow()
+            dm.origin_name = file_location
+            dm.file_name = new_file_name
+            dm.file_type = extention
+            background_tasks.add_task(image_process,dm)
+            #save image data to db
+            DB.tbl_image.insert_one(dm.dict())
+        else:
+            raise HTTPException(status_code=406, detail="Unknown image type")
+
+    return {"ok":"ok"}
